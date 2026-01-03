@@ -1,0 +1,557 @@
+{
+    "sdk":  6,
+    "version":  29,
+    "name":  "Pear Desktop YTM",
+    "id":  "com.hellblazer90.pear.ytm",
+    "configuration":  {
+                          "colorDark":  "#8b0000",
+                          "colorLight":  "#ff3b3b"
+                      },
+    "plugin_start_cmd_windows":  "cmd /c \"\"%TP_PLUGIN_FOLDER%com.hellblazer90.pear.ytm\\start.cmd\"\"",
+    "settings":  [
+                     {
+                         "name":  "Pear API Port (from Pear Desktop)",
+                         "type":  "text",
+                         "default":  "9863"
+                     },
+                     {
+                         "name":  "Pear API Hostname (Advanced, usually 127.0.0.1)",
+                         "type":  "text",
+                         "default":  "127.0.0.1",
+                         "readOnly":  false
+                     },
+                     {
+                         "name":  "Auth Client ID (Pear API server)",
+                         "type":  "text",
+                         "default":  "touchportal"
+                     },
+                     {
+                         "name":  "Poll Interval (ms) (Advanced, song refresh)",
+                         "type":  "text",
+                         "default":  "500"
+                     },
+                     {
+                         "name":  "Extended States Enabled (True/False, volume/like/repeat/etc)",
+                         "type":  "text",
+                         "default":  "True"
+                     },
+                     {
+                         "name":  "Cover Art Mode (Off/Memory/Local, icon source)",
+                         "type":  "text",
+                         "default":  "Memory"
+                     }
+                 ],
+    "categories":  [
+                       {
+                           "id":  "pear.control",
+                           "name":  "Pear Desktop (YouTube Music)",
+                           "imagepath":  "%TP_PLUGIN_FOLDER%com.hellblazer90.pear.ytm/icon.png",
+                           "connectors":  [
+                                              {
+                                                  "id":  "com.hellblazer90.pear.ytm.connector.volume",
+                                                  "name":  "Volume Slider",
+                                                  "format":  "Set Pear volume"
+                                              }
+                                          ],
+                           "actions":  [
+                                           {
+                                               "id":  "pear.playPauseChoice",
+                                               "name":  "Playback",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Playback {$pear.playPauseChoice.choice$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.playPauseChoice.choice",
+                                                                "type":  "choice",
+                                                                "label":  "Choice",
+                                                                "default":  "Toggle",
+                                                                "valueChoices":  [
+                                                                                     "Play",
+                                                                                     "Pause",
+                                                                                     "Toggle"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.nextPrevChoice",
+                                               "name":  "Next/Previous",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Playback {$pear.nextPrevChoice.direction$} Song",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.nextPrevChoice.direction",
+                                                                "type":  "choice",
+                                                                "label":  "Direction",
+                                                                "default":  "Next",
+                                                                "valueChoices":  [
+                                                                                     "Previous",
+                                                                                     "Next"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.likeDislikeChoice",
+                                               "name":  "Like/Dislike",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "{$pear.likeDislikeChoice.choice$} This Song",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.likeDislikeChoice.choice",
+                                                                "type":  "choice",
+                                                                "label":  "Choice",
+                                                                "default":  "Like",
+                                                                "valueChoices":  [
+                                                                                     "Dislike",
+                                                                                     "Like"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.volumeStep",
+                                               "name":  "Volume",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Volume {$pear.volumeStep.direction$} by {$pear.volumeStep.step$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.volumeStep.direction",
+                                                                "type":  "choice",
+                                                                "label":  "Direction",
+                                                                "default":  "Up",
+                                                                "valueChoices":  [
+                                                                                     "Down",
+                                                                                     "Up"
+                                                                                 ]
+                                                            },
+                                                            {
+                                                                "id":  "pear.volumeStep.step",
+                                                                "type":  "number",
+                                                                "label":  "Step",
+                                                                "allowDecimals":  false,
+                                                                "default":  "5"
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.volume",
+                                               "name":  "Set Volume",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Set Volume to {$pear.volume.percent$}%",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.volume.percent",
+                                                                "type":  "number",
+                                                                "label":  "Percent",
+                                                                "allowDecimals":  false,
+                                                                "default":  "50"
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.toggleMute",
+                                               "name":  "Mute",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Mute {$pear.toggleMute.choice$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.toggleMute.choice",
+                                                                "type":  "choice",
+                                                                "label":  "Choice",
+                                                                "default":  "Toggle",
+                                                                "valueChoices":  [
+                                                                                     "Mute",
+                                                                                     "Unmute",
+                                                                                     "Toggle"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.seekRelativeChoice",
+                                               "name":  "Seek",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Seek {$pear.seekRelativeChoice.direction$} by {$pear.seekRelativeChoice.seconds$} Seconds",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.seekRelativeChoice.direction",
+                                                                "type":  "choice",
+                                                                "label":  "Direction",
+                                                                "default":  "Forward",
+                                                                "valueChoices":  [
+                                                                                     "Rewind",
+                                                                                     "Forward"
+                                                                                 ]
+                                                            },
+                                                            {
+                                                                "id":  "pear.seekRelativeChoice.seconds",
+                                                                "type":  "number",
+                                                                "label":  "Seconds",
+                                                                "allowDecimals":  false,
+                                                                "default":  "10"
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.seekTo",
+                                               "name":  "Seek To",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Seek To {$pear.seekTo.seconds$} Seconds",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.seekTo.seconds",
+                                                                "type":  "number",
+                                                                "label":  "Seconds",
+                                                                "allowDecimals":  false,
+                                                                "default":  "60"
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.repeatModeChoice",
+                                               "name":  "Repeat",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Repeat {$pear.repeatModeChoice.mode$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.repeatModeChoice.mode",
+                                                                "type":  "choice",
+                                                                "label":  "Mode",
+                                                                "default":  "OFF",
+                                                                "valueChoices":  [
+                                                                                     "Toggle",
+                                                                                     "OFF",
+                                                                                     "ALL",
+                                                                                     "ONE"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.queuePlayIndex",
+                                               "name":  "Play Track (Queue Index)",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "format":  "Play Queue Index {$pear.queuePlayIndex.index$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.queuePlayIndex.index",
+                                                                "type":  "number",
+                                                                "label":  "Index (0-based)",
+                                                                "allowDecimals":  false,
+                                                                "default":  "0"
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.queueAddVideo",
+                                               "name":  "Add Track to Queue",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "format":  "Add Video {$pear.queueAddVideo.videoId$} ({$pear.queueAddVideo.insertPosition$})",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.queueAddVideo.videoId",
+                                                                "type":  "text",
+                                                                "label":  "Video ID",
+                                                                "default":  ""
+                                                            },
+                                                            {
+                                                                "id":  "pear.queueAddVideo.insertPosition",
+                                                                "type":  "choice",
+                                                                "label":  "Insert Position",
+                                                                "default":  "INSERT_AT_END",
+                                                                "valueChoices":  [
+                                                                                     "INSERT_AT_END",
+                                                                                     "INSERT_AFTER_CURRENT_VIDEO"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.shuffleStateChoice",
+                                               "name":  "Shuffle",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "tryInline":  true,
+                                               "format":  "Shuffle {$pear.shuffleStateChoice.state$}",
+                                               "data":  [
+                                                            {
+                                                                "id":  "pear.shuffleStateChoice.state",
+                                                                "type":  "choice",
+                                                                "label":  "State",
+                                                                "default":  "On",
+                                                                "valueChoices":  [
+                                                                                     "Toggle",
+                                                                                     "On",
+                                                                                     "Off"
+                                                                                 ]
+                                                            }
+                                                        ]
+                                           },
+                                           {
+                                               "id":  "pear.token",
+                                               "name":  "Generate Token",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "format":  "Generate Token"
+                                           },
+                                           {
+                                               "id":  "pear.refresh",
+                                               "name":  "Refresh States",
+                                               "prefix":  "Pear Desktop",
+                                               "type":  "communicate",
+                                               "format":  "Refresh States"
+                                           }
+                                       ],
+                           "states":  [
+                                          {
+                                              "id":  "pear.title",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song Title",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.artist",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song Artist",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.album",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song Album",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.coverUrl",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art URL",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.coverPath",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art Path",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.coverFileUrl",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art File URL",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.coverBase64",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art Base64 (raw)",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.coverBase64SendCount",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art Base64 Send Count",
+                                              "default":  "0"
+                                          },
+                                          {
+                                              "id":  "pear.coverDebug",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Cover Art Debug",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.hasSong",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Has Song",
+                                              "default":  "False"
+                                          },
+                                          {
+                                              "id":  "pear.isPaused",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Is Paused",
+                                              "default":  "True"
+                                          },
+                                          {
+                                              "id":  "pear.isPlaying",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Is Playing",
+                                              "default":  "False"
+                                          },
+                                          {
+                                              "id":  "pear.durationSec",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song Duration (sec)",
+                                              "default":  "0"
+                                          },
+                                          {
+                                              "id":  "pear.durationText",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song Duration (mm:ss)",
+                                              "default":  "00:00"
+                                          },
+                                          {
+                                              "id":  "pear.elapsedSec",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Elapsed (sec)",
+                                              "default":  "0"
+                                          },
+                                          {
+                                              "id":  "pear.elapsedText",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Elapsed (mm:ss)",
+                                              "default":  "00:00"
+                                          },
+                                          {
+                                              "id":  "pear.volumePercent",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Volume Percent",
+                                              "default":  "0"
+                                          },
+                                          {
+                                              "default":  "",
+                                              "id":  "pear.volumeRaw",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Volume Raw"
+                                          },
+                                          {
+                                              "default":  "",
+                                              "id":  "pear.volumeScale",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Volume Scale"
+                                          },
+                                          {
+                                              "default":  "",
+                                              "id":  "pear.volumeResponse",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Volume Response (debug)"
+                                          },
+                                          {
+                                              "id":  "pear.isMuted",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Is Muted",
+                                              "default":  "False"
+                                          },
+                                          {
+                                              "id":  "pear.likeState",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Like State",
+                                              "default":  "INDIFFERENT"
+                                          },
+                                          {
+                                              "id":  "pear.repeatMode",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Repeat Mode",
+                                              "default":  "NONE"
+                                          },
+                                          {
+                                              "id":  "pear.shuffleState",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Shuffle State",
+                                              "default":  "False"
+                                          },
+                                          {
+                                              "id":  "pear.url",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Song URL",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.videoId",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Video ID",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.playlistId",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Playlist ID",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.mediaType",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Media Type",
+                                              "default":  ""
+                                          },
+                                          {
+                                              "id":  "pear.connectionStatus",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Connection Status",
+                                              "default":  "Disconnected"
+                                          }
+                                      ],
+                           "events":  [
+                                          {
+                                              "id":  "pear.event.isPaused",
+                                              "name":  "Playback Is Paused",
+                                              "format":  "Playback paused is $val",
+                                              "type":  "communicate",
+                                              "valueType":  "choice",
+                                              "valueChoices":  [
+                                                                   "True",
+                                                                   "False"
+                                                               ],
+                                              "valueStateId":  "pear.isPaused"
+                                          },
+                                          {
+                                              "id":  "pear.event.likeState",
+                                              "name":  "Like State",
+                                              "format":  "Like state is $val",
+                                              "type":  "communicate",
+                                              "valueType":  "choice",
+                                              "valueChoices":  [
+                                                                   "INDIFFERENT",
+                                                                   "LIKE",
+                                                                   "DISLIKE"
+                                                               ],
+                                              "valueStateId":  "pear.likeState"
+                                          },
+                                          {
+                                              "id":  "pear.event.repeatMode",
+                                              "name":  "Repeat Mode",
+                                              "format":  "Repeat mode is $val",
+                                              "type":  "communicate",
+                                              "valueType":  "choice",
+                                              "valueChoices":  [
+                                                                   "NONE",
+                                                                   "ALL",
+                                                                   "ONE"
+                                                               ],
+                                              "valueStateId":  "pear.repeatMode"
+                                          },
+                                          {
+                                              "id":  "pear.event.shuffleState",
+                                              "name":  "Shuffle State",
+                                              "format":  "Shuffle is $val",
+                                              "type":  "communicate",
+                                              "valueType":  "choice",
+                                              "valueChoices":  [
+                                                                   "True",
+                                                                   "False"
+                                                               ],
+                                              "valueStateId":  "pear.shuffleState"
+                                          }
+                                      ]
+                       }
+                   ]
+}
+
