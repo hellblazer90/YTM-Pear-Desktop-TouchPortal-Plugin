@@ -10,6 +10,25 @@ This TouchPortal plugin controls Pear Desktop (YouTube Music) through the local 
 
 For a guided walkthrough of settings, actions, and states, see `USER_GUIDE.md`.
 
+## Index
+
+- [Installation (User)](#installation-user)
+- [Tested With](#tested-with)
+- [TouchPortal Settings](#touchportal-settings)
+- [Connection Status](#connection-status)
+- [Troubleshooting History (What Went Wrong + Fixes)](#troubleshooting-history-what-went-wrong--fixes)
+- [Installation (Advanced / Build from Source)](#installation-advanced--build-from-source)
+- [Swagger and Endpoint Paths](#swagger-and-endpoint-paths)
+- [Actions](#actions)
+- [Connectors](#connectors)
+- [Events](#events)
+- [States](#states)
+
+## Tested With
+
+- Pear Desktop 3.11.00
+- TouchPortal 4.4 Build 6
+
 ## Installation (User)
 
 These steps are for end users. Add screenshots where noted.
@@ -31,21 +50,38 @@ Steps:
 
 
 ![Pear API Server setting](TUTORIAL/1.jpg) 
+
+
 This picture is the API Server of Pear Desktop YTM
 
+
 ![Pear API Server setting](TUTORIAL/2.jpg)
+
+
 This is the dynamic text needed to view connection status (you can also select other to show Artist, Album, Song, etc.)
 
+
 ![Pear API Server setting](TUTORIAL/3.jpg)
+
+
 This is the dynamic text to add for connection status
 
+
 ![Pear API Server setting](TUTORIAL/toggle.jpg)
+
+
 This is an example of the action buttons (some of them has different options)
 
+
 ![Pear API Server setting](TUTORIAL/4.jpg)
+
+
 This is the actions you need to show cover art
 
+
 ![Pear API Server setting](TUTORIAL/5.jpg)
+
+
 This is the settings as default, no need to change anything (maybe poll interval if you find that is getting laggy, but updates can take longer)
 
 
@@ -219,7 +255,5 @@ volume: { method: "POST", path: "/api/v1/volume", valueIn: "body", valueKey: "pe
 - Playlist ID
 - Media Type
 - Connection Status
-
-
 
 
