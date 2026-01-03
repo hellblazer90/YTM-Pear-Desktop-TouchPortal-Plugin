@@ -38,7 +38,7 @@ Requirements:
 - Pear Desktop with the YouTube Music API Server enabled.
 
 Steps:
-1) Enable the YouTube Music API Server in Pear Desktop and note the port (default 9863).
+1) Enable the YouTube Music API Server in Pear Desktop and note the port (default 26538).
    - 🍐 Pear Desktop: https://github.com/pear-devs/pear-desktop
 2) Download `PearYTM.tpp` from the latest GitHub Release.
 3) TouchPortal -> Settings -> Plug-ins -> Import -> select `PearYTM.tpp`. You can also double-click the `.tpp` file.
@@ -52,10 +52,11 @@ Steps:
 ![Pear API Server setting](TUTORIAL/1.jpg) 
 
 
-This picture is the API Server of Pear Desktop YTM:
-- HostName: 127.0.0.1 (default)
-- Port: 26538 (default)
-- Authorization strategy: Authorize at first request
+⬆️⬆️⬆️ This picture is the API Server of Pear Desktop YTM:
+
+    HostName: 127.0.0.1 (default)
+    Port: 26538 (default)
+    Authorization strategy: Authorize at first request
 
 
 ![Pear API Server setting](TUTORIAL/2.jpg)
@@ -93,7 +94,7 @@ This is the settings as default, no need to change anything (maybe poll interval
 
 The plugin builds the base URL as `http://{hostname}:{port}`. Users only enter:
 
-- Pear API Port (from Pear Desktop, default 9863)
+- Pear API Port (from Pear Desktop, default 26538)
 - Pear API Hostname (Advanced, usually 127.0.0.1)
 - Auth Client ID (Pear API server, default touchportal)
 - Poll Interval (ms) (Advanced, song refresh, default 500)
@@ -258,5 +259,4 @@ volume: { method: "POST", path: "/api/v1/volume", valueIn: "body", valueKey: "pe
 - Playlist ID
 - Media Type
 - Connection Status
-
 
