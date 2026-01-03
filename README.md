@@ -52,7 +52,10 @@ Steps:
 ![Pear API Server setting](TUTORIAL/1.jpg) 
 
 
-This picture is the API Server of Pear Desktop YTM
+This picture is the API Server of Pear Desktop YTM:
+- HostName: 127.0.0.1 (default)
+- Port: 26538 (default)
+- Authorization strategy: Authorize at first request
 
 
 ![Pear API Server setting](TUTORIAL/2.jpg)
@@ -255,5 +258,4 @@ volume: { method: "POST", path: "/api/v1/volume", valueIn: "body", valueKey: "pe
 - Playlist ID
 - Media Type
 - Connection Status
-
 
