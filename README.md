@@ -1,17 +1,55 @@
-# PearYTM TouchPortal Plugin
+﻿# PearYTM TouchPortal Plugin
 
 This TouchPortal plugin controls Pear Desktop (YouTube Music) through the local YouTube Music API Server.
 
+> [!WARNING]
+> **Personal project notice:** I made this entirely with an LLM for personal use in a day. I do not plan to update it. If you want to continue support, feel free. Thank you in advance.
+
+> [!NOTE]
+> Some instructions may be written directly by an LLM.
+
 For a guided walkthrough of settings, actions, and states, see `USER_GUIDE.md`.
 
-## Install
+## Installation (User)
 
-1. Enable the YouTube Music API Server in Pear Desktop.
-2. Note the port shown in Pear Desktop settings (default 9863).
-3. Import `PearYTM.tpp` into TouchPortal (see below).
+These steps are for end users. Add screenshots where noted.
 
-Note: Node.js 18+ is required (built-in fetch).
+Requirements:
+- Node.js 18+ (the plugin uses built-in `fetch`).
+- Pear Desktop with the YouTube Music API Server enabled.
 
+Steps:
+1) Enable the YouTube Music API Server in Pear Desktop and note the port (default 9863).
+   - 🍐 Pear Desktop: https://github.com/pear-devs/pear-desktop
+2) Download `PearYTM.tpp` from the latest GitHub Release.
+3) TouchPortal -> Settings -> Plug-ins -> Import -> select `PearYTM.tpp`. You can also double-click the `.tpp` file.
+4) Restart TouchPortal.
+5) Open the plugin settings and enter the Pear API Port/Hostname if needed; it must match the Pear Desktop API.
+6) Create an action button "Dynamic Text Updater" and select "Pear Desktop YTM - Connection Status" (or `${value:pear.connectionStatus}`) to show the current connection with the API.
+7) Optional: Run the action `Pear Desktop -> Generate Token`
+8) If Connection Status is "Connected", you can now start to add actions.
+
+
+![Pear API Server setting](TUTORIAL/1.jpg) 
+This picture is the API Server of Pear Desktop YTM
+
+![Pear API Server setting](TUTORIAL/2.jpg)
+This is the dynamic text needed to view connection status (you can also select other to show Artist, Album, Song, etc.)
+
+![Pear API Server setting](TUTORIAL/3.jpg)
+This is the dynamic text to add for connection status
+
+![Pear API Server setting](TUTORIAL/toggle.jpg)
+This is an example of the action buttons (some of them has different options)
+
+![Pear API Server setting](TUTORIAL/4.jpg)
+This is the actions you need to show cover art
+
+![Pear API Server setting](TUTORIAL/5.jpg)
+This is the settings as default, no need to change anything (maybe poll interval if you find that is getting laggy, but updates can take longer)
+
+
+ 
 ## TouchPortal Settings
 
 The plugin builds the base URL as `http://{hostname}:{port}`. Users only enter:
@@ -53,11 +91,11 @@ This project hit a bunch of common TouchPortal/plugin issues. Here is what happe
 - Logs cut off: shortened plugin name to `Pear Desktop YTM` so TP log header fits.
 - Set Volume not working: API expects `body: { volume }`; clamp 0-100 and use integer input.
 
-## Install in TouchPortal (.tpp)
+## Installation (Advanced / Build from Source)
 
 TouchPortal `.tpp` files are ZIPs that contain a top-level plugin folder. For this plugin the folder name should be `com.hellblazer90.pear.ytm`.
 
-Suggested workflow:
+This section is for developers or advanced users who want to build the `.tpp` from source.
 
 1. Build the `.tpp` (PowerShell):
 
@@ -181,5 +219,7 @@ volume: { method: "POST", path: "/api/v1/volume", valueIn: "body", valueKey: "pe
 - Playlist ID
 - Media Type
 - Connection Status
+
+
 
 
