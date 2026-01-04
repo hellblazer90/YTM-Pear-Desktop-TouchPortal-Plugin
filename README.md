@@ -1,4 +1,4 @@
-﻿# PearYTM TouchPortal Plugin
+﻿# PearYTM TouchPortal Plugin (by HellBlazer90)
 
 This TouchPortal plugin controls Pear Desktop (YouTube Music) through the local YouTube Music API Server.
 
