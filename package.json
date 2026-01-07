@@ -1,6 +1,6 @@
 {
   "name": "pear-ytm-touchportal",
-  "version": "1.0.0",
+  "version": "29.1.0",
   "description": "TouchPortal plugin for Pear Desktop (YouTube Music)",
   "main": "src/index.js",
   "type": "commonjs",

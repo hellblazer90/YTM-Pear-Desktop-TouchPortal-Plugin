@@ -72,7 +72,8 @@ const STATES = {
   videoId: "pear.videoId",
   playlistId: "pear.playlistId",
   mediaType: "pear.mediaType",
-  connectionStatus: "pear.connectionStatus"
+  connectionStatus: "pear.connectionStatus",
+  startupStatus: "pear.startupStatus"
 };
 
 const EVENTS = {
@@ -106,6 +107,7 @@ let pollInFlight = false;
 let extraPollInFlight = false;
 let connecting = false;
 let connectionStatus = "";
+let startupStatus = "";
 let isConnected = false;
 let lastExtraPollAt = 0;
 let lastSongSignature = "";
@@ -1050,6 +1052,17 @@ function updateEvent(eventId, value) {
   triggerEvent(eventId, textValue);
 }
 
+function setStartupStatus(status) {
+  const textValue = status || "";
+  if (textValue === startupStatus) {
+    return false;
+  }
+
+  startupStatus = textValue;
+  updateState(STATES.startupStatus, textValue);
+  return true;
+}
+
 function setConnectionStatus(status) {
   const textValue = status || "";
   if (textValue === connectionStatus) {
@@ -1059,6 +1072,11 @@ function setConnectionStatus(status) {
   connectionStatus = textValue;
   isConnected = textValue === "Connected";
   updateState(STATES.connectionStatus, textValue);
+  if (textValue === "Connected") {
+    setStartupStatus("Ready");
+  } else if (textValue && textValue !== "Disconnected") {
+    setStartupStatus(textValue);
+  }
   return true;
 }
 
@@ -1107,6 +1125,9 @@ function formatConnectionStatus(err) {
 function handleConnectionFailure(err) {
   const status = formatConnectionStatus(err);
   const changed = setConnectionStatus(status);
+  if (status === "Disconnected") {
+    setStartupStatus("Waiting for API");
+  }
 
   if (changed) {
     log(`Connection status: ${status}`);
@@ -1737,6 +1758,7 @@ tpClient.on("connected", () => {
   lastVolumeSetAt = 0;
   volumeStateScale = 1;
   setConnectionStatus("Disconnected");
+  setStartupStatus("TouchPortal connected; checking API");
   checkConnection();
 });
 
@@ -1801,6 +1823,7 @@ tpClient.on("close", () => {
   pendingVolumeTarget = null;
   lastVolumeSetAt = 0;
   volumeStateScale = 1;
+  setStartupStatus("TouchPortal disconnected");
 });
 
 tpClient.on("error", (err) => {

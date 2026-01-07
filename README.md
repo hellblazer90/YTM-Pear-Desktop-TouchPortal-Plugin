@@ -8,6 +8,10 @@ This TouchPortal plugin controls Pear Desktop (YouTube Music) through the local 
 > [!NOTE]
 > Some instructions may be written directly by an LLM.
 
+## New in v29.1
+
+- Added a `Startup Status` state to show startup progress and highlight missing Node.js or restart needs.
+
 For a guided walkthrough of settings, actions, and states, see `USER_GUIDE.md`.
 
 ## Index
@@ -35,6 +39,7 @@ These steps are for end users. Add screenshots where noted.
 
 Requirements:
 - Node.js 18+ (the plugin uses built-in `fetch`).
+- If you install Node.js while TouchPortal is running, restart TouchPortal so the plugin can see it in PATH.
 - Pear Desktop with the YouTube Music API Server enabled.
 
 Steps:
@@ -116,6 +121,17 @@ The state `pear.connectionStatus` shows:
 - `Auth failed (...)` or `Error (...)` for other failures.
 
 Place the state on a button to view connection status in your UI.
+
+## Startup Status
+
+The state `pear.startupStatus` shows startup progress and quick guidance, such as:
+
+- `Plugin not running (Node.js 18+; restart TouchPortal)` when the plugin cannot start.
+- `TouchPortal connected; checking API` during initial connection.
+- `Ready` once the plugin is connected and running.
+- `Waiting for API` if the API is unreachable.
+
+Place the state on a button or use a Dynamic Text Updater to surface this hint.
 
 ## Troubleshooting History (What Went Wrong + Fixes)
 
@@ -259,3 +275,5 @@ volume: { method: "POST", path: "/api/v1/volume", valueIn: "body", valueKey: "pe
 - Playlist ID
 - Media Type
 - Connection Status
+- Startup Status
+- Startup Status

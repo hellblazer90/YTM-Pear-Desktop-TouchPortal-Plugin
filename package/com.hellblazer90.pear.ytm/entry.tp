@@ -1,6 +1,6 @@
 {
     "sdk":  6,
-    "version":  29,
+    "version":  29.1,
     "name":  "Pear Desktop YTM",
     "id":  "com.hellblazer90.pear.ytm",
     "configuration":  {
@@ -497,6 +497,12 @@
                                               "type":  "text",
                                               "desc":  "Pear Desktop YTM - Connection Status",
                                               "default":  "Disconnected"
+                                          },
+                                          {
+                                              "id":  "pear.startupStatus",
+                                              "type":  "text",
+                                              "desc":  "Pear Desktop YTM - Startup Status",
+                                              "default":  "Plugin not running (Node.js 18+; restart TouchPortal)"
                                           }
                                       ],
                            "events":  [
