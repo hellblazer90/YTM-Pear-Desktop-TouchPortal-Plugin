@@ -8,9 +8,10 @@ This TouchPortal plugin controls Pear Desktop (YouTube Music) through the local 
 > [!NOTE]
 > Some instructions may be written directly by an LLM.
 
-## New in v29.1
+## New in v29.2
 
 - Added a `Startup Status` state to show startup progress and highlight missing Node.js or restart needs.
+- Troubleshooting now calls out the Node.js install + TouchPortal restart fix for "Disconnected".
 
 For a guided walkthrough of settings, actions, and states, see `USER_GUIDE.md`.
 
@@ -137,6 +138,7 @@ Place the state on a button or use a Dynamic Text Updater to surface this hint.
 
 This project hit a bunch of common TouchPortal/plugin issues. Here is what happened and how we solved it:
 
+- Shows "Disconnected" and no actions/states respond: install Node.js 18+ and restart TouchPortal so the plugin can see `node` in PATH.
 - No settings in TouchPortal: switched to SDK 6, used `settings` with `type: "text"`, bumped `version`, re-imported.
 - Import errors / stuck on assets: removed external deps and `node_modules`; rely on Node 18+ built-in `fetch`.
 - Actions not showing: added `prefix`, `type: "communicate"`, and `format` for actions in `entry.tp`.
